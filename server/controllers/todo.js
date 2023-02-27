@@ -1,7 +1,7 @@
 import Todo from '../models/Todo.js'
 export const createTodo = async (req, res) => {
     try {
-        const { title, createdAt } = req.body
+        const { title, createdAt, tasks } = req.body
         const user_id = req.user.userid._id
         if (!title) {
             return res.status(500).json({
@@ -9,8 +9,14 @@ export const createTodo = async (req, res) => {
                 message: 'todo is empty'
             })
         }
+
+        if (tasks && !(Array.isArray(tasks))) {
+            throw new Error("Tasks should be a array object")
+        }
+
         const todo = new Todo({
             title: title,
+            tasks: tasks,
             user_id: user_id,
             createdAt: createdAt
         })

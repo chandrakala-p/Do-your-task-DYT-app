@@ -10,12 +10,14 @@ const auth = async (req, res, next) => {
         })
     }
     const token = authorization.split(' ')[1]
+    //console.log(token)
     try {
         const { _id, name } = jwt.verify(token, process.env.JWT_SECRET)
         req.user = {
             userid: await User.findOne({ _id }).select('_id'),
             name: name
         }
+        //console.log(req.user)
         next()
     } catch (error) {
         res.status(401).json({
