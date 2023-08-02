@@ -19,7 +19,7 @@ import React, { useState } from "react"
  * @param  setMakeRequest - To make DB call and populate todos in todoList once form is submitted.
  * @returns - Form element - Which can be used to update or create a todo.
  */
-const TodoForm = ({ buttonName, todo = "", setTodoAdded }) => {
+const TodoForm = ({ buttonName, todo = "", setTodoAdded, setTodoEditted }) => {
 
 
 
@@ -88,6 +88,7 @@ const TodoForm = ({ buttonName, todo = "", setTodoAdded }) => {
             console.log(response)
             if (response.success) {
                 setTodoAdded(true)
+                setTodoEditted(false)
                 toast.success(response.message, {
                     position: "top-right",
                     autoClose: 5000,

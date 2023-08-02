@@ -3,6 +3,7 @@ import axios from 'axios'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import TodoForm from '../components/TodoForm';
+import EditTodo from '../components/EditTodo';
 
 const Landing = () => {
     const [username, setUserName] = useState(null)
@@ -351,7 +352,7 @@ const Landing = () => {
                     <>
                         <h1 className="my-6 text-2xl md:text-4xl font-medium text-violet-600 text-center">Create New Todo</h1>
                         <div className="w-full md:w-2/3 mx-auto">
-                            <TodoForm buttonName="Create Todo" setTodoAdded={setTodoAdded} />
+                            <TodoForm buttonName="Create Todo" setTodoAdded={setTodoAdded} setTodoEditted={setTodoEditted} />
                         </div>
                     </>
 
@@ -409,36 +410,42 @@ const Landing = () => {
                         <tbody>
                             {
                                 todos.map(todo => (
-                                    <tr key={todo._id} className="border-b border-opacity-20 border-gray-300 bg-gray-50">
-                                        <td className="p-3">
-                                            <p>{todo.title}</p>
-                                        </td>
-                                        <td className="p-3">
-                                            <p>{new Date(todo.createdAt).toDateString()}</p>
-                                        </td>
-                                        <td className="p-3">
-                                            <p>{new Date().toGMTString(todo.updatedAt)}</p>
-                                        </td>
-                                        <td className="p-3 ">
-                                            <button onClick={() => handleTaskClick(todo._id)} className="px-3 py-1 font-semibold rounded-md bg-indigo-600 text-gray-50">
-                                                <span>Tasks: {todo.tasks.length}</span>
-                                            </button>
-                                        </td>
-                                        <td className="p-3">
-                                            <button onClick={() => handleDelete(todo._id)} className="px-3 py-1 font-semibold rounded-md bg-indigo-600 text-gray-50">
-                                                <span>Delete</span>
-                                            </button>
-                                        </td>
-                                        <td className="p-3 ">
-                                            <button onClick={() => handleEdit(todo._id)} className="px-3 py-1 font-semibold rounded-md bg-indigo-600 text-gray-50">
-                                                <span>Edit</span>
-                                            </button>
-                                        </td>
-                                    </tr>
+                                    <>
+                                        <tr key={todo._id} className="border-b border-opacity-20 border-gray-300 bg-gray-50">
+                                            <td className="p-3">
+                                                <p>{todo.title}</p>
+                                            </td>
+                                            <td className="p-3">
+                                                <p>{new Date(todo.createdAt).toDateString()}</p>
+                                            </td>
+                                            <td className="p-3">
+                                                <p>{new Date().toGMTString(todo.updatedAt)}</p>
+                                            </td>
+                                            <td className="p-3 ">
+                                                <button onClick={() => handleTaskClick(todo._id)} className="px-3 py-1 font-semibold rounded-md bg-indigo-600 text-gray-50">
+                                                    <span>Tasks: {todo.tasks.length}</span>
+                                                </button>
+                                            </td>
+                                            <td className="p-3">
+                                                <button onClick={() => handleDelete(todo._id)} className="px-3 py-1 font-semibold rounded-md bg-indigo-600 text-gray-50">
+                                                    <span>Delete</span>
+                                                </button>
+                                            </td>
+                                            <td className="p-3 ">
+                                                <button onClick={() => handleEdit(todo._id)}
+                                                    className="px-3 py-1 font-semibold rounded-md bg-indigo-600 text-gray-50">
+                                                    <span>Edit</span>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                        <EditTodo editTodo={todoEditted} setEditTodo={setTodoEditted} todo={todo} />
+                                    </>
                                 ))
+
                             }
                         </tbody>
                     </table>
+
                 </div>
             </div>
             {
